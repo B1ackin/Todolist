@@ -9,7 +9,7 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 export type TaskType = {
     id: string,
     isDone: boolean,
-    title: string
+    title: string,
 }
 
 type TodoListType = {
