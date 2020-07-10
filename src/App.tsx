@@ -45,6 +45,7 @@ function App() {
         [todoListID2]: [
             {id: v1(), isDone: false, title: "RestAPI"},
             {id: v1(), isDone: false, title: "GraphQL"},
+            {id: v1(), isDone: true, title: "GraphQL"},
         ]
     });
     console.dir(setTasks);
@@ -130,7 +131,7 @@ function App() {
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container style={elementPadding}>
+                <Grid container style={{padding: "15px 0px 15px 0px"}}>
                     <AddItemForm addItem={addTodoList}/>
                 </Grid>
                 <Grid container spacing={3}>
