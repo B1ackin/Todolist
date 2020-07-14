@@ -125,9 +125,9 @@ function App() {
                         <Menu/>
                     </IconButton>
                     <Typography variant="h6">
-                        News
+                        ToDoList
                     </Typography>
-                    <Button color="inherit">Login</Button>
+
                 </Toolbar>
             </AppBar>
             <Container fixed>
