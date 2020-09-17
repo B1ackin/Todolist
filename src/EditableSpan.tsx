@@ -1,55 +1,29 @@
-import React, {useState, ChangeEvent} from "react";
-import {TextField} from "@material-ui/core";
+import React, {ChangeEvent, useState} from 'react';
+import {TextField} from '@material-ui/core';
 
-type EditableSpanType = {
-    title: string,
-    saveTitle: (newTitle: string) => void
+type EditableSpanPropsType = {
+    value: string
+    onChange: (newValue: string) => void
 }
 
+export function EditableSpan(props: EditableSpanPropsType) {
+    let [editMode, setEditMode] = useState(false);
+    let [title, setTitle] = useState(props.value);
 
-
-function EditableSpan(props: EditableSpanType) {
-
-    let [editMode, setEditMode] = useState <boolean>(false)
-    let [title, setTitle] = useState <string>(props.title)
-
-
-    const onEditMode = () => {
+    const activateEditMode = () => {
         setEditMode(true);
+        setTitle(props.value);
     }
-
-    const offEditMode = () => {
-        if(title.trim()){
-            props.saveTitle(title);
-        } else {
-            setTitle(props.title)
-        }
+    const activateViewMode = () => {
         setEditMode(false);
+        props.onChange(title);
     }
-
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
-
-    return (
-        editMode
-            ? <TextField
-                variant={"outlined"}
-                value={title}
-                autoFocus={true}
-                onBlur={offEditMode}
-                onChange={changeTitle}
-            />
-            // ? <input
-            //     value={title}
-            //     autoFocus={true}
-            //     onBlur={offEditMode}
-            //     onChange={chan1geTitle}
-            // />
-            : <span onDoubleClick={onEditMode}>{props.title}</span>
-    )
-
+    return editMode
+        ?    <TextField variant="outlined"
+                        value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />
+        : <span onDoubleClick={activateEditMode}>{props.value}</span>
 }
-
-export  default EditableSpan;
