@@ -44,7 +44,7 @@ export const Todolist = React.memo(function (props: PropsType) {
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.id), [props.changeFilter, props.id])
     const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.id), [props.changeFilter, props.id])
 
-    let tasksForTodolist = props.tasks
+    let tasksForTodolist = props.tasks;
 
     if (props.filter === 'active') {
         tasksForTodolist = props.tasks.filter(t => t.isDone === false)
@@ -62,7 +62,7 @@ export const Todolist = React.memo(function (props: PropsType) {
         <AddItemForm addItem={addTask}/>
         <div>
             {
-                props.tasks.map(t => <Task
+                tasksForTodolist.map(t => <Task
                     task={t}
                     changeTaskStatus={props.changeTaskStatus}
                     changeTaskTitle={props.changeTaskTitle}
