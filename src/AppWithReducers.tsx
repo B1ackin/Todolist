@@ -52,7 +52,10 @@ function AppWithReducers() {
     }
 
     function addTask(title: string, todolistId: string) {
-        const action = addTaskAC(title, todolistId);
+        const action = addTaskAC(
+            { id: "1", title: title, status: TaskStatuses.New, todolistId: todolistId,
+                description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low },
+        );
         dispatchToTasks(action);
     }
 
