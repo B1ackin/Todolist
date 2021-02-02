@@ -30,18 +30,18 @@ function App() {
     ])
 
     let [tasks, setTasks] = useState<TasksStateType>({
-        [todolistId1]: [
-            {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todolistId: todolistId1,
-               description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low},
-            {id: v1(), title: "JS", status: TaskStatuses.Completed, todolistId: todolistId1,
-                description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low}
-        ],
-        [todolistId2]: [
-            {id: v1(), title: "Milk", status: TaskStatuses.Completed, todolistId: todolistId2,
-                description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low},
-            {id: v1(), title: "React Book", status: TaskStatuses.Completed, todolistId: todolistId2,
-                description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low}
-        ]
+        // [todolistId1]: [
+        //     {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todoListId: todolistId1,
+        //        description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low},
+        //     {id: v1(), title: "JS", status: TaskStatuses.Completed, todoListId: todolistId1,
+        //         description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low}
+        // ],
+        // [todolistId2]: [
+        //     {id: v1(), title: "Milk", status: TaskStatuses.Completed, todoListId: todolistId2,
+        //         description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low},
+        //     {id: v1(), title: "React Book", status: TaskStatuses.Completed, todolistId: todolistId2,
+        //         description: "", startDate: "", deadline: '', addedDate: "", order: 0, priority: TaskPriorities.Low}
+        // ]
     });
 
     function removeTask(id: string, todolistId: string) {
@@ -59,7 +59,7 @@ function App() {
         //достанем нужный массив по todolistId:
         let todolistTasks = tasks[todolistId];
         // перезапишем в этом объекте массив для нужного тудулиста копией, добавив в начало новую таску:
-        tasks[todolistId] = [task, ...todolistTasks];
+        // tasks[todolistId] = [task, ...todolistTasks];
         // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
         setTasks({...tasks});
     }
