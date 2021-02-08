@@ -1,8 +1,8 @@
 import React, {useReducer, useState} from 'react';
-import './App.css';
-import {Todolist} from './Todolist';
+import '../app/App.css';
+import {Todolist} from '../features/TodolistsList/Todolist/Todolist';
 import {v1} from 'uuid';
-import {AddItemForm} from './AddItemForm';
+import {AddItemForm} from './../components/AddItemForm/AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
@@ -11,9 +11,9 @@ import {
     changeTodolistTitleAC, FilterValuesType,
     removeTodolistAC,
     todolistsReducer
-} from './state/todolists-reducer';
-import {addTaskAC, updateTaskAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api";
+} from '../features/TodolistsList/todolists-reducer';
+import {addTaskAC, updateTaskAC, removeTaskAC, tasksReducer} from '../features/TodolistsList/tasks-reducer';
+import {TaskPriorities, TaskStatuses, TaskType} from "./../api/todolists-api";
 
 
 
@@ -64,10 +64,10 @@ function AppWithReducers() {
         dispatchToTasks(action);
     }
 
-    function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        const action = changeTaskTitleAC(id, newTitle, todolistId);
-        dispatchToTasks(action);
-    }
+    // function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
+    //     const action = changeTaskTitleAC(id, newTitle, todolistId);
+    //     dispatchToTasks(action);
+    // }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
         const action = changeTodolistFilterAC(todolistId, value);
@@ -139,7 +139,7 @@ function AppWithReducers() {
                                         changeTaskStatus={changeStatus}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}
-                                        changeTaskTitle={changeTaskTitle}
+                                        changeTaskTitle={() => {}}
                                         changeTodolistTitle={changeTodolistTitle}
                                     />
                                 </Paper>

@@ -6,7 +6,7 @@ import {
     todolistsReducer
 } from './todolists-reducer';
 import {v1} from 'uuid';
-import {TaskPriorities, TaskStatuses, TodolistType} from "../api/todolists-api";
+import {TaskPriorities, TaskStatuses, TodolistType} from "../../api/todolists-api";
 
 
 let todolistId1: string;

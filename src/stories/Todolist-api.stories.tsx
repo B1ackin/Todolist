@@ -97,7 +97,7 @@ export const UpdateTodolistTitle = () => {
     return <div>
         {JSON.stringify(state)}
         <div>
-            <input placeholder={"Введите ID Todolists"}
+            <input placeholder={"Введите ID TodolistsList"}
                    value={todoId}
                    onChange={(e) => {setTodoId(e.currentTarget.value)}}
             />
