@@ -69,7 +69,7 @@ export type TodolistType = {
 }
 type ResponseType<D = {}> = {
     resultCode: number
-    message: Array<string>
+    messages: Array<string>
     data: D
 }
 export type TaskType = {

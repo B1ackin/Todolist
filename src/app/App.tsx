@@ -1,9 +1,13 @@
 import React from 'react'
 import './App.css';
-import {AppBar, Button, Container, IconButton, Toolbar, Typography} from '@material-ui/core';
+import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {TaskType} from "./../api/todolists-api";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import {ErrorSnackbar} from "../components/ErrorSnackBar/ErrorSnackBar";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./store";
+import {RequestStatusType} from "./app-reducer";
 
 
 export type TasksStateType = {
@@ -19,10 +23,11 @@ const Fake = React.memo(function() {
 */
 
 function App() {
-
+    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
 
     return (
         <div className="App">
+            <ErrorSnackbar />
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
@@ -33,6 +38,8 @@ function App() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                { status === "loading" && <LinearProgress /> }
+
             </AppBar>
             <Container fixed>
             <TodolistsList/>
