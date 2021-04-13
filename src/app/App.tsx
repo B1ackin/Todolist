@@ -22,7 +22,11 @@ const Fake = React.memo(function() {
 })
 */
 
-function App() {
+type PropsType = {
+    demo?: boolean
+}
+
+function App({demo = true}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
 
     return (
@@ -42,7 +46,7 @@ function App() {
 
             </AppBar>
             <Container fixed>
-            <TodolistsList/>
+            <TodolistsList demo={demo}/>
             </Container>
         </div>
     );

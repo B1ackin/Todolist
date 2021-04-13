@@ -8,7 +8,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelTyp
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../../app/store";
 import {act} from "react-dom/test-utils";
-import {setErrorAC, SetErrorActionsType, setStatusAC, SetStatusActionsType} from "../../app/app-reducer";
+import {setAppErrorAC, SetErrorActionsType, setAppStatusAC, SetStatusActionsType} from "../../app/app-reducer";
 
 
 const initialState: TasksStateType = {
@@ -83,11 +83,11 @@ export const setTaskAC = (tasks: Array<TaskType>, todolistId: string) => ({ type
 
 //thunks
 export const fetchTaskTC = (todolistId: string) =>  (dispatch: Dispatch<ActionsType | SetStatusActionsType>) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setAppStatusAC('loading'))
         todolistsAPI.getTasks(todolistId)
             .then((res) => {
                 dispatch(setTaskAC(res.data.items, todolistId))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 
@@ -100,21 +100,21 @@ export const removeTaskTC = (taskId: string, todolistId: string) => (dispatch: D
     }
 
 export const addTaskTC = (title: string, todolistId: string  ) => (dispatch: Dispatch<ActionsType | SetErrorActionsType | SetStatusActionsType>) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setAppStatusAC('loading'))
     todolistsAPI.createTask(todolistId, title)
             .then(res => {
                 if (res.data.resultCode === 0) {
                     const task = res.data.data.item;
                     const action = addTaskAC(task)
                     dispatch(action)
-                    dispatch(setStatusAC('succeeded'))
+                    dispatch(setAppStatusAC('succeeded'))
                 } else {
                     if (res.data.messages.length) {
-                        dispatch(setErrorAC(res.data.messages[0]))
+                        dispatch(setAppErrorAC(res.data.messages[0]))
                     } else {
-                        dispatch(setErrorAC("Some error occurred"))
+                        dispatch(setAppErrorAC("Some error occurred"))
                     }
-                    dispatch(setStatusAC('failed'))
+                    dispatch(setAppStatusAC('failed'))
                 }
             })
     }
