@@ -26,7 +26,7 @@ type PropsType = {
     demo?: boolean
 }
 
-function App({demo = true}: PropsType) {
+function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
 
     return (

@@ -9,6 +9,8 @@ import {Dispatch} from "redux";
 import {AppRootStateType} from "../../app/store";
 import {act} from "react-dom/test-utils";
 import {setAppErrorAC, SetErrorActionsType, setAppStatusAC, SetStatusActionsType} from "../../app/app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
+
 
 
 const initialState: TasksStateType = {
@@ -109,19 +111,15 @@ export const addTaskTC = (title: string, todolistId: string  ) => (dispatch: Dis
                     dispatch(action)
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setAppErrorAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setAppErrorAC("Some error occurred"))
-                    }
-                    dispatch(setAppStatusAC('failed'))
+                    handleServerAppError(res.data, dispatch)
                 }
-            })
+            }).catch((error) => {
+        handleServerNetworkError(error, dispatch)
+    })
     }
 
-export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) => {
-
-    return (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
+export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todolistId: string) =>
+    (dispatch: ThunkDispatch, getState: () => AppRootStateType) => {
         const state = getState();
         const task = state.tasks[todolistId].find(t => t.id === taskId)
         if(!task) {
@@ -139,12 +137,26 @@ export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
             ...domainModel
         }
         todolistsAPI.updateTask(taskId, todolistId, apiModel)
-            .then((res) => {
-                const action = updateTaskAC(taskId, domainModel, todolistId)
-                dispatch(action)
-            })
+            .then(res => {
+                if (res.data.resultCode === 0)  {
+                    const action = updateTaskAC(taskId, domainModel, todolistId)
+                    dispatch(action)
+                } else {
+                    handleServerAppError(res.data, dispatch)
+                    if (res.data.messages.length) {
+                        dispatch(setAppErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setAppErrorAC("Some error occurred"))
+                    }
+
+                    dispatch(setAppStatusAC('failed'))
+                }
+
+            }).catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
     }
-}
+
 
 //types
 type ActionsType =
@@ -165,3 +177,5 @@ export type UpdateDomainTaskModelType = {
     startDate?: string
     deadline?: string
 }
+
+type ThunkDispatch = Dispatch<ActionsType | SetStatusActionsType | SetErrorActionsType>
