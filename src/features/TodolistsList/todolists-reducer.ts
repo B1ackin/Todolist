@@ -1,6 +1,7 @@
 import {todolistsAPI, TodolistType} from "../../api/todolists-api";
 import {Dispatch} from "redux";
-import {RequestStatusType, setAppStatusAC, SetStatusActionsType} from "../../app/app-reducer";
+import {RequestStatusType, setAppStatusAC, SetErrorActionsType, SetStatusActionsType} from "../../app/app-reducer";
+import {handleServerNetworkError} from "../../utils/error-utils";
 
 
 
@@ -58,6 +59,9 @@ export const fetchTodolistsTC = () => {
                 dispatch(setTodolistsAC(res.data))
                 dispatch(setAppStatusAC('succeeded'))
             })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch)
+            })
     }
 }
 
@@ -113,4 +117,4 @@ export type TodolistDomainType = TodolistType & {
     entutyStatus: RequestStatusType
 }
 
-type ThunkDispatch = Dispatch<ActionsType | SetStatusActionsType>
+type ThunkDispatch = Dispatch<ActionsType | SetStatusActionsType | SetErrorActionsType>

@@ -8,6 +8,8 @@ import {ErrorSnackbar} from "../components/ErrorSnackBar/ErrorSnackBar";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
 import {RequestStatusType} from "./app-reducer";
+import {BrowserRouter, Route} from "react-router-dom";
+import {Login} from "../features/Login/Login";
 
 
 export type TasksStateType = {
@@ -30,6 +32,7 @@ function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
 
     return (
+        <BrowserRouter>
         <div className="App">
             <ErrorSnackbar />
             <AppBar position="static">
@@ -46,9 +49,12 @@ function App({demo = false}: PropsType) {
 
             </AppBar>
             <Container fixed>
-            <TodolistsList demo={demo}/>
+                <Route exact path={"/"} render={() => <TodolistsList demo={demo}/>}/>
+                <Route path={"/login"} render={() => <Login/>}/>
+
             </Container>
         </div>
+        </BrowserRouter>
     );
 }
 
